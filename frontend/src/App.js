@@ -101,7 +101,7 @@ class App extends Component {
         <span>
           <button
             onClick={() => this.editItem(item)}
-            className="btn btn-secondary mr-2"
+            className="btn btn-success"
           >
             <img src="/edit.png" alt="" className="image-icon" />
             Edit
