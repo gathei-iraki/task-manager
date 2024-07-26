@@ -7,26 +7,54 @@ class Register extends Component {
     this.state = {
       username: "",
       password: "",
-      message: ""
+      message: "",
+      loading: false,
     };
   }
 
   handleChange = (event) => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
     const { username, password } = this.state;
+
+    if (username === "" || password === "") {
+      this.setState({ message: "Username and password are required." });
+      return;
+    }
+
+    this.setState({ loading: true });
+
     axios
-      .post("http://localhost:8000/register/", { username, password })
+      .post("http://localhost:8000/register/", { username, password }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
       .then((response) => {
-        this.setState({ message: response.data.success });
+        if (response.data.success) {
+          this.setState({ message: response.data.success, loading: false });
+          this.props.onRegister();
+        } else {
+          this.setState({
+            message: "Registration successful, please log in",
+            loading: false,
+          });
+        }
       })
       .catch((error) => {
-        this.setState({ message: error.response.data.error });
+        if (error.response && error.response.data.error) {
+          this.setState({ message: error.response.data.error, loading: false });
+        } else {
+          this.setState({
+            message: "An error occurred during registration.",
+            loading: false,
+          });
+        }
       });
   };
 
@@ -53,7 +81,9 @@ class Register extends Component {
               onChange={this.handleChange}
             />
           </div>
-          <button type="submit">Register</button>
+          <button type="submit" disabled={this.state.loading}>
+            {this.state.loading ? "Registering..." : "Register"}
+          </button>
         </form>
         <p>{this.state.message}</p>
       </div>

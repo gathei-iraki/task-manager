@@ -1,25 +1,221 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Modal from "./components/Modal";
+import axios from 'axios';
+import Register from "./components/Register";
+import Login from "./components/Login";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      viewCompleted: false,
+      activeItem: {
+        title: "",
+        description: "",
+        completed: false
+      },
+      taskList: [],
+      isAuthenticated: false,
+      token: "",
+      view: "tasks"  // view can be "tasks", "login", or "register"
+    };
+  }
+
+  // Add componentDidMount()
+  componentDidMount() {
+    this.refreshList();
+  }
+
+  refreshList = () => {
+    if (!this.state.isAuthenticated) return;
+    axios
+      .get("http://localhost:8000/api/task/", {
+        headers: { Authorization: `Token ${this.state.token}` }
+      })
+      .then(res => this.setState({ taskList: res.data }))
+      .catch(err => console.log(err));
+  };
+
+  displayCompleted = status => {
+    if (status) {
+      return this.setState({ viewCompleted: true });
+    }
+    return this.setState({ viewCompleted: false });
+  };
+
+  handleRegister = () => {
+    this.setState({ view: "register" });
+  };
+
+  handleLogin = (token) => {
+    this.setState({ isAuthenticated: true, token, view: "tasks" }, this.refreshList);
+  };
+
+  handleLogout = () => {
+    axios.post("http://localhost:8000/logout/", null, {
+      headers: { Authorization: `Token ${this.state.token}` }
+    }).then(() => {
+      this.setState({ isAuthenticated: false, token: "" });
+    }).catch(err => console.log(err));
+  };
+
+  renderTabList = () => {
+    return (
+      <div className="my-5 tab-list">
+        <span
+          onClick={() => this.displayCompleted(true)}
+          className={this.state.viewCompleted ? "active" : ""}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+          completed
+        </span>
+        <span
+          onClick={() => this.displayCompleted(false)}
+          className={this.state.viewCompleted ? "" : "active"}
+        >
+          Incompleted
+        </span>
+      </div>
+    );
+  };
+
+  renderItems = () => {
+    const { viewCompleted } = this.state;
+    const newItems = this.state.taskList.filter(
+      item => item.completed === viewCompleted
+    );
+    return newItems.map(item => (
+      <li
+        key={item.id}
+        className="list-group-item d-flex justify-content-between align-items-center"
+      >
+        <span
+          className={`todo-title mr-2 ${this.state.viewCompleted ? "completed-todo" : ""}`}
+          title={item.description}
+        >
+          {item.title}
+        </span>
+        <span>
+          <button
+            onClick={() => this.editItem(item)}
+            className="btn btn-secondary mr-2"
+          >
+            <img src="/edit.png" alt="" className="image-icon" />
+            Edit
+          </button>
+          <button
+            onClick={() => this.handleDelete(item)}
+            className="btn btn-danger"
+          >
+            <img src="/delete.png" alt="" className="image-icon" />
+            Delete
+          </button>
+        </span>
+      </li>
+    ));
+  };
+
+  toggle = () => {
+    this.setState({ modal: !this.state.modal });
+  };
+
+  handleSubmit = item => {
+    this.toggle();
+    if (item.id) {
+      axios
+        .put(`http://localhost:8000/api/task/${item.id}/`, item, {
+          headers: { Authorization: `Token ${this.state.token}` }
+        })
+        .then(res => this.refreshList());
+      return;
+    }
+    axios
+      .post("http://localhost:8000/api/task/", item, {
+        headers: { Authorization: `Token ${this.state.token}` }
+      })
+      .then(res => this.refreshList());
+  };
+
+  handleDelete = item => {
+    axios
+      .delete(`http://localhost:8000/api/task/${item.id}/`, {
+        headers: { Authorization: `Token ${this.state.token}` }
+      })
+      .then(res => this.refreshList());
+  };
+
+  createItem = () => {
+    const item = { title: "", description: "", completed: false };
+    this.setState({ activeItem: item, modal: !this.state.modal });
+  };
+
+  editItem = item => {
+    this.setState({ activeItem: item, modal: !this.state.modal });
+  };
+
+  render() {
+    let content;
+    switch (this.state.view) {
+      case "register":
+        content = <Register />;
+        break;
+      case "login":
+        content = <Login onLogin={this.handleLogin} />;
+        break;
+      default:
+        content = (
+          <div>
+            <div className="row ">
+              <div className="col-md-6 col-sm-10 mx-auto p-0">
+                <div className="card p-3">
+                  <div className="">
+                    <button onClick={this.createItem} className="btn btn-primary">
+                      Add task
+                    </button>
+                    <button onClick={this.handleLogout} className="btn btn-secondary ml-2">
+                      Logout
+                    </button>
+                  </div>
+                  {this.renderTabList()}
+                  <ul className="list-group list-group-flush">
+                    {this.renderItems()}
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <footer className="my-3 mb-2 footer">
+              Copyright 2023 &copy; All Right Reserved
+            </footer>
+            {this.state.modal ? (
+              <Modal
+                activeItem={this.state.activeItem}
+                toggle={this.toggle}
+                onSave={this.handleSubmit}
+              />
+            ) : null}
+          </div>
+        );
+        break;
+    }
+
+    return (
+      <main className="content main-content">
+        <h1 className="text-black text-uppercase text-center my-4">Task Manager</h1>
+        <div className="text-center">
+          {!this.state.isAuthenticated && (
+            <>
+              <button onClick={() => this.setState({ view: "login" })} className="btn btn-primary mr-2">
+                Login
+              </button>
+              <button onClick={() => this.setState({ view: "register" })} className="btn btn-secondary">
+                Register
+              </button>
+            </>
+          )}
+        </div>
+        {content}
+      </main>
+    );
+  }
 }
 
 export default App;

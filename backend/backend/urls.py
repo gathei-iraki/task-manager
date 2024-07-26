@@ -26,6 +26,8 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
-    path('api/', include(router.urls)),  # Include DRF routes
+        path('', views.login_view, name='root'),  # Redirect root URL to the login view
+         path('', views.home, name='home'),
+  # Include DRF routes
 ]
 
