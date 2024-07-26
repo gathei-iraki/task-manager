@@ -17,7 +17,7 @@ class App extends Component {
       taskList: [],
       isAuthenticated: false,
       token: "",
-      view: "tasks"  // view can be "tasks", "login", or "register"
+      view: "home"  // initial view can be "home", "login", or "register"
     };
   }
 
@@ -43,7 +43,7 @@ class App extends Component {
   };
 
   handleRegister = () => {
-    this.setState({ view: "login" });
+    this.setState({ view: "register" });
   };
 
   handleLogin = (token) => {
@@ -55,14 +55,13 @@ class App extends Component {
       'Content-Type': 'application/json',
       'Authorization': `Token ${this.state.token}`,
     };
-  
+
     axios.post("http://localhost:8000/logout/", null, { headers })
       .then(() => {
-        this.setState({ isAuthenticated: false, token: "" });
+        this.setState({ isAuthenticated: false, token: "", view: "home" });
       })
       .catch(err => console.log(err));
   };
-  
 
   renderTabList = () => {
     return (
@@ -143,10 +142,12 @@ class App extends Component {
   };
 
   handleDelete = item => {
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${this.state.token}`,
+    };
     axios
-      .delete(`http://localhost:8000/api/tasks/${item.id}/`, {
-        headers: { Authorization: `Token ${this.state.token}` }
-      })
+      .delete(`http://localhost:8000/api/tasks/${item.id}/`, { headers })
       .then(res => this.refreshList());
   };
 
@@ -168,10 +169,10 @@ class App extends Component {
       case "login":
         content = <Login onLogin={this.handleLogin} />;
         break;
-      default:
+      case "tasks":
         content = (
           <div>
-            <div className="row ">
+            <div className="row">
               <div className="col-md-6 col-sm-10 mx-auto p-0">
                 <div className="card p-3">
                   <div className="">
@@ -190,7 +191,7 @@ class App extends Component {
               </div>
             </div>
             <footer className="my-3 mb-2 footer">
-              Copyright 2023 &copy; All Right Reserved
+              Copyright 2024 &copy; All Right Reserved
             </footer>
             {this.state.modal ? (
               <Modal
@@ -202,23 +203,23 @@ class App extends Component {
           </div>
         );
         break;
+      default:
+        content = (
+          <div className="text-center">
+            <h1 className="text-black text-uppercase text-center my-4">Task Manager</h1>
+            <button onClick={() => this.setState({ view: "login" })} className="btn btn-primary mr-2">
+              Login
+            </button>
+            <button onClick={() => this.setState({ view: "register" })} className="btn btn-secondary">
+              Register
+            </button>
+          </div>
+        );
+        break;
     }
 
     return (
       <main className="content main-content">
-        <h1 className="text-black text-uppercase text-center my-4">Task Manager</h1>
-        <div className="text-center">
-          {!this.state.isAuthenticated && (
-            <>
-              <button onClick={() => this.setState({ view: "login" })} className="btn btn-primary mr-2">
-                Login
-              </button>
-              <button onClick={() => this.setState({ view: "register" })} className="btn btn-secondary">
-                Register
-              </button>
-            </>
-          )}
-        </div>
         {content}
       </main>
     );
