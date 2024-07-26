@@ -51,12 +51,18 @@ class App extends Component {
   };
 
   handleLogout = () => {
-    axios.post("http://localhost:8000/logout/", null, {
-      headers: { Authorization: `Token ${this.state.token}` }
-    }).then(() => {
-      this.setState({ isAuthenticated: false, token: "" });
-    }).catch(err => console.log(err));
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${this.state.token}`,
+    };
+  
+    axios.post("http://localhost:8000/logout/", null, { headers })
+      .then(() => {
+        this.setState({ isAuthenticated: false, token: "" });
+      })
+      .catch(err => console.log(err));
   };
+  
 
   renderTabList = () => {
     return (

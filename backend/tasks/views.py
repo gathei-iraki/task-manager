@@ -1,17 +1,16 @@
 from rest_framework import viewsets
+from rest_framework.decorators import api_view, permission_classes  # Importing here
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authtoken.models import Token
 from .models import Task
 from .serializers import TaskSerializer
-from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 import logging
-from rest_framework.authtoken.models import Token
-
 logger = logging.getLogger(__name__)
 
 class TaskView(viewsets.ModelViewSet):
@@ -74,7 +73,10 @@ def login_view(request):
     except Exception as e:
         logger.error(f"Exception occurred: {e}")
         return JsonResponse({'error': 'An error occurred during login.', 'details': str(e)}, status=500)
-@login_required
+@csrf_exempt
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def logout_view(request):
+    request.user.auth_token.delete()
     logout(request)
     return JsonResponse({'success': 'Logout successful'}, status=200)
