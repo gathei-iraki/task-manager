@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .serializers import TaskSerializer
+from .serializers import TaskSerializer, UserSerializer
 from .models import Task  # Ensure this matches your model import
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
@@ -8,8 +8,7 @@ from django.contrib.auth.models import User
 from django.views.decorators.http import require_http_methods
 from django.http import JsonResponse
 
-# Create your views here.
-
+# DRF ViewSet for Task
 class TaskView(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
     queryset = Task.objects.all()
