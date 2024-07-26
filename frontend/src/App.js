@@ -28,7 +28,7 @@ class App extends Component {
   refreshList = () => {
     if (!this.state.isAuthenticated) return;
     axios
-      .get("http://localhost:8000/api/task/", {
+      .get("http://localhost:8000/api/tasks/", {
         headers: { Authorization: `Token ${this.state.token}` }
       })
       .then(res => this.setState({ taskList: res.data }))
@@ -119,24 +119,26 @@ class App extends Component {
 
   handleSubmit = item => {
     this.toggle();
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${this.state.token}`,
+    };
     if (item.id) {
       axios
-        .put(`http://localhost:8000/api/task/${item.id}/`, item, {
-          headers: { Authorization: `Token ${this.state.token}` }
-        })
-        .then(res => this.refreshList());
+        .put(`http://localhost:8000/api/tasks/${item.id}/`, item, { headers })
+        .then(res => this.refreshList())
+        .catch(err => console.log(err));
       return;
     }
     axios
-      .post("http://localhost:8000/api/task/", item, {
-        headers: { Authorization: `Token ${this.state.token}` }
-      })
-      .then(res => this.refreshList());
+      .post("http://localhost:8000/api/tasks/", item, { headers })
+      .then(res => this.refreshList())
+      .catch(err => console.log(err));
   };
 
   handleDelete = item => {
     axios
-      .delete(`http://localhost:8000/api/task/${item.id}/`, {
+      .delete(`http://localhost:8000/api/tasks/${item.id}/`, {
         headers: { Authorization: `Token ${this.state.token}` }
       })
       .then(res => this.refreshList());

@@ -1,8 +1,7 @@
-from django.shortcuts import render
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
-from .serializers import TaskSerializer, UserSerializer
 from .models import Task
+from .serializers import TaskSerializer
+from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -11,10 +10,10 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 import logging
+from rest_framework.authtoken.models import Token
 
 logger = logging.getLogger(__name__)
 
-# DRF ViewSet for Task
 class TaskView(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
     queryset = Task.objects.all()
@@ -26,7 +25,6 @@ class TaskView(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
-# User Registration View
 @csrf_exempt
 @require_http_methods(['POST'])
 def register(request):
@@ -57,8 +55,6 @@ def register(request):
         logger.error(f"Exception occurred: {e}")
         return JsonResponse({'error': 'An error occurred during registration.', 'details': str(e)}, status=500)
 
-
-# User Login View
 @csrf_exempt
 @require_http_methods(['POST'])
 def login_view(request):
@@ -69,7 +65,8 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return JsonResponse({'success': 'Login successful!'}, status=200)
+            token, created = Token.objects.get_or_create(user=user)
+            return JsonResponse({'success': 'Login successful!', 'token': token.key}, status=200)
         return JsonResponse({'error': 'Incorrect username or password.'}, status=400)
     except json.JSONDecodeError as e:
         logger.error(f"JSON decode error: {e}")
@@ -77,14 +74,7 @@ def login_view(request):
     except Exception as e:
         logger.error(f"Exception occurred: {e}")
         return JsonResponse({'error': 'An error occurred during login.', 'details': str(e)}, status=500)
-
-# User Logout View
 @login_required
 def logout_view(request):
     logout(request)
     return JsonResponse({'success': 'Logout successful'}, status=200)
-
-# Home View
-@login_required
-def home(request):
-    return render(request, 'home.html')

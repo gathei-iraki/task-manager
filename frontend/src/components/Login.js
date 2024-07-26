@@ -7,27 +7,60 @@ class Login extends Component {
     this.state = {
       username: "",
       password: "",
-      message: ""
+      message: "",
+      loading: false,
     };
   }
 
   handleChange = (event) => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
     const { username, password } = this.state;
+
+    if (username === "" || password === "") {
+      this.setState({ message: "Username and password are required." });
+      return;
+    }
+
+    this.setState({ loading: true });
+
     axios
-      .post("http://localhost:8000/login/", { username, password })
+      .post("http://localhost:8000/login/", { username, password }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
       .then((response) => {
-        this.setState({ message: response.data.success });
-        this.props.onLogin(response.data.token);  // Pass the token to the parent component
+        if (response.status === 200) {
+          this.setState({
+            message: response.data.success,
+            username: "",
+            password: "",
+            loading: false,
+          });
+          this.props.onLogin(response.data.token);  // Pass token to parent component
+        } else {
+          this.setState({
+            message: response.data.error || "An unexpected error occurred.",
+            loading: false,
+          });
+        }
       })
       .catch((error) => {
-        this.setState({ message: error.response.data.error });
+        console.error("Error during login:", error);
+        if (error.response && error.response.data.error) {
+          this.setState({ message: error.response.data.error, loading: false });
+        } else {
+          this.setState({
+            message: "An error occurred during login.",
+            loading: false,
+          });
+        }
       });
   };
 
@@ -43,6 +76,7 @@ class Login extends Component {
               name="username"
               value={this.state.username}
               onChange={this.handleChange}
+              required
             />
           </div>
           <div>
@@ -52,9 +86,12 @@ class Login extends Component {
               name="password"
               value={this.state.password}
               onChange={this.handleChange}
+              required
             />
           </div>
-          <button type="submit">Login</button>
+          <button type="submit" disabled={this.state.loading}>
+            {this.state.loading ? "Logging in..." : "Login"}
+          </button>
         </form>
         <p>{this.state.message}</p>
       </div>
