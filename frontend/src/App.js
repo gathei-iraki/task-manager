@@ -203,20 +203,21 @@ class App extends Component {
           </div>
         );
         break;
-      default:
-        content = (
-          <div className="text-center">
-            <h1 className="text-black text-uppercase text-center my-4">Task Manager</h1>
-            <button onClick={() => this.setState({ view: "login" })} className="btn btn-primary mr-2">
-              Login
-            </button>
-            <button onClick={() => this.setState({ view: "register" })} className="btn btn-secondary">
-              Register
-            </button>
-          </div>
-        );
-        break;
-    }
+        default:
+          content = (
+            <div className="text-center">
+              <img src="/project-management.png" alt="Task Manager Logo" className="logo" />
+              <h1 className="text-black text-uppercase text-center my-4">Task Manager</h1>
+              <button onClick={() => this.setState({ view: "login" })} className="btn btn-primary mr-2">
+                Login
+              </button>
+              <button onClick={() => this.setState({ view: "register" })} className="btn btn-secondary">
+                Register
+              </button>
+            </div>
+          );
+          break;
+      }
 
     return (
       <main className="content main-content">
