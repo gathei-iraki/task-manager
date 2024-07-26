@@ -21,7 +21,6 @@ class App extends Component {
     };
   }
 
-  // Add componentDidMount()
   componentDidMount() {
     this.refreshList();
   }
@@ -44,7 +43,7 @@ class App extends Component {
   };
 
   handleRegister = () => {
-    this.setState({ view: "register" });
+    this.setState({ view: "login" });
   };
 
   handleLogin = (token) => {
@@ -66,7 +65,7 @@ class App extends Component {
           onClick={() => this.displayCompleted(true)}
           className={this.state.viewCompleted ? "active" : ""}
         >
-          completed
+          Completed
         </span>
         <span
           onClick={() => this.displayCompleted(false)}
@@ -156,7 +155,7 @@ class App extends Component {
     let content;
     switch (this.state.view) {
       case "register":
-        content = <Register />;
+        content = <Register onRegister={this.handleRegister} />;
         break;
       case "login":
         content = <Login onLogin={this.handleLogin} />;

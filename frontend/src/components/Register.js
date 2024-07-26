@@ -27,6 +27,11 @@ class Register extends Component {
       return;
     }
 
+    if (password.length < 6) {
+      this.setState({ message: "Password must be at least 6 characters long." });
+      return;
+    }
+
     this.setState({ loading: true });
 
     axios
@@ -36,17 +41,26 @@ class Register extends Component {
         }
       })
       .then((response) => {
-        if (response.data.success) {
-          this.setState({ message: response.data.success, loading: false });
-          this.props.onRegister();
+        if (response.status === 201) {
+          this.setState({
+            message: response.data.success,
+            username: "",
+            password: "",
+            loading: false,
+          });
+          if (this.props.onRegister) {
+            this.props.onRegister();
+          }
+          setTimeout(() => this.setState({ message: "" }), 3000);
         } else {
           this.setState({
-            message: "Registration successful, please log in",
+            message: response.data.error || "An unexpected error occurred.",
             loading: false,
           });
         }
       })
       .catch((error) => {
+        console.error("Error during registration:", error);
         if (error.response && error.response.data.error) {
           this.setState({ message: error.response.data.error, loading: false });
         } else {
@@ -70,6 +84,7 @@ class Register extends Component {
               name="username"
               value={this.state.username}
               onChange={this.handleChange}
+              required
             />
           </div>
           <div>
@@ -79,6 +94,7 @@ class Register extends Component {
               name="password"
               value={this.state.password}
               onChange={this.handleChange}
+              required
             />
           </div>
           <button type="submit" disabled={this.state.loading}>
