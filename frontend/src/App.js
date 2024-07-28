@@ -70,13 +70,13 @@ class App extends Component {
           onClick={() => this.displayCompleted(true)}
           className={this.state.viewCompleted ? "active" : ""}
         >
-          Completed
+          Complete
         </span>
         <span
           onClick={() => this.displayCompleted(false)}
           className={this.state.viewCompleted ? "" : "active"}
         >
-          Incompleted
+          Incomplete
         </span>
       </div>
     );
@@ -176,7 +176,9 @@ class App extends Component {
               <div className="col-md-6 col-sm-10 mx-auto p-0">
                 <div className="card p-3">
                   <div className="">
-                    <button onClick={this.createItem} className="btn btn-primary">
+                    <button onClick={this.createItem} className="btn btn-primary"
+                   
+                    >
                       Add task
                     </button>
                     <button onClick={this.handleLogout} className="btn btn-secondary ml-2"
@@ -213,7 +215,8 @@ class App extends Component {
             <div className="text-center">
               <img src="/project-management.png" alt="Task Manager Logo" className="logo" />
               <h1 className="text-black text-uppercase text-center my-4">Task Manager</h1>
-              <button onClick={() => this.setState({ view: "login" })} className="btn btn-primary mr-2">
+              <button onClick={() => this.setState({ view: "login" })} className="btn btn-primary mr-2"
+                >
                 Login
               </button>
               <button onClick={() => this.setState({ view: "register" })} className="btn btn-secondary">

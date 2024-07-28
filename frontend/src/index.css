@@ -28,65 +28,72 @@ body {
 .main-content {
   background-color: #465794;
   padding: 20px; 
-  height: 500vh;
+  height: 100vh;
  
 }
 
-/* Style the heading */
 .text-center {
-  color: #333; /* Text color */
-  font-size: 36px; /* Font size */
-  margin-bottom: 20px; /* Margin at the bottom */
+  color: #333; 
+  font-size: 36px; 
+  margin-bottom: 20px; 
 }
 
 .row{
   font-weight: 500;
 }
-/* Style the buttons */
+
+
+
 .btn-primary {
-  background-color: #6c757d !important; /* Button background color */
-  color: #fff; /* Button text color */
-  font-weight: 500 !important;
-  border: none; /* Remove button border */
-  padding: 10px 20px; /* Padding inside the button */
-  margin-bottom: 20px; /* Margin at the bottom */
+  background-color: #6c757d !important;
+  font-weight: 500;
+  color: #fff;
+  border:#6c757d ;
+  padding: 10px 20px; 
+  margin-bottom: 20px; 
   width: 200px;
+  outline:none;
+  box-shadow: none;
+}
+
+.btn-primary:focus {
+  outline:none !important;
+  box-shadow: none !important;
 }
 
 .btn-primary:hover {
-  background-color: #0056b3; /* Change color on hover */
+  background-color: #5a6268; 
 }
 
 .btn-secondary {
-  background-color: #6c757d; /* Button background color */
+  background-color: #6c757d; 
   font-weight: 500;
-  color: #fff; /* Button text color */
+  color: #fff; 
   border:#6c757d ;
-  padding: 10px 20px; /* Padding inside the button */
-  margin-bottom: 20px; /* Margin at the bottom */
+  padding: 10px 20px; 
+  margin-bottom: 20px; 
   width: 200px
 }
 
 .btn-secondary:hover {
-  background-color: #5a6268; /* Change color on hover */
+  background-color: #5a6268; 
 }
 
-/* Style the card */
+
 .card {
-  border: none; /* Remove card border */
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add a box shadow */
-  
+  border: none; 
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
 }
 
-/* Style the list */
+
 .list-group-item {
-  background-color: #fff; /* List item background color */
-  border: none; /* Remove list item border */
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); /* Add a box shadow */
-  margin-bottom: 10px; /* Margin at the bottom of each item */
+  background-color: #fff; 
+  border: none; 
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1); 
+  margin-bottom: 10px; 
 }
 
-/* Style the tab list */
+
 .tab-list {
   display: flex;
   justify-content: center;
@@ -96,86 +103,83 @@ body {
 .tab-list span {
   cursor: pointer;
   padding: 10px 20px;
-  background-color: #007bff; /* Tab background color */
-  color: #fff; /* Tab text color */
-  border: 1px solid #007bff; /* Tab border */
-  border-radius: 5px; /* Rounded corners */
-  margin-right: 10px; /* Margin between tabs */
+  background-color: #007bff; 
+  color: #fff; 
+  border: 1px solid #007bff; 
+  border-radius: 5px; 
+  margin-right: 10px; 
 }
 
 .tab-list span.active {
-  background-color: #0056b3; /* Active tab background color */
-  border: 1px solid #0056b3; /* Active tab border */
+  background-color: #0056b3; 
+  border: 1px solid #0056b3; 
 }
 
-/* Style the modal */
+
 .modal-content {
-  background-color: #fff; /* Modal background color */
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Add a box shadow */
-  border: none; /* Remove modal border */
-  border-radius: 5px; /* Rounded corners */
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); 
+  border: none; 
+  border-radius: 5px; 
 }
 
-/* Style the form input fields */
+
 .form-control {
-  border: 1px solid #ccc; /* Input field border */
-  border-radius: 5px; /* Rounded corners */
-  padding: 10px; /* Padding inside input fields */
-  margin-bottom: 20px; /* Margin at the bottom of input fields */
+  border: 1px solid #ccc; 
+  border-radius: 5px; 
+  padding: 10px; 
+  margin-bottom: 20px; 
 }
 
 
-/* Style the save button */
 .btn-success {
-  background-color: #28a745; /* Save button background color */
-  color: #fff; /* Save button text color */
-  border: none; /* Remove button border */
-  border-radius: 5px; /* Rounded corners */
-  padding: 10px 20px; /* Padding inside the button */
+  background-color: #28a745; 
+  color: #fff; 
+  border: none; 
+  border-radius: 5px; 
+  padding: 10px 20px; 
 }
 
 .btn-success:hover {
-  background-color: #218838; /* Change color on hover */
+  background-color: #218838; 
 }
 
-/* Style the delete button */
+
 .btn-danger {
-  background-color: #dc3545; /* Delete button background color */
-  color: #fff; /* Delete button text color */
-  border: none; /* Remove button border */
-  border-radius: 5px; /* Rounded corners */
-  padding: 10px 20px; /* Padding inside the button */
+  background-color: #dc3545;
+  color: #fff; 
+  border: none; 
+  border-radius: 5px; 
+  padding: 10px 20px; 
 }
 
 .btn-danger:hover {
-  background-color: #c82333; /* Change color on hover */
+  background-color: #c82333; 
 }
 
-/* Style the sticky footer */
+
 .footer {
-  background-color: #333; /* Footer background color */
-  color: #fff; /* Footer text color */
-  text-align: center; /* Center-align the text */
-  padding: 10px 0; /* Add some padding to the top and bottom */
-  position: fixed; /* Fixed position at the bottom of the viewport */
+  background-color: #333; 
+  color: #fff; 
+  text-align: center; 
+  padding: 10px 0;
+  position: fixed; 
   left: 0;
   bottom: 0;
-  width: 100%; /* Full width */
+  width: 100%; 
 }
 
 .image-icon {
-  width: 20px; /* Adjust the width of the icon */
-  height: 20px; /* Adjust the height of the icon */
-  margin-right: 8px; /* Space between the icon and the text */
-  vertical-align: middle; /* Align icon with the text */
-}
+  width: 20px; 
+  height: 20px; 
+  margin-right: 8px; 
+  vertical-align: middle; }
 
 .btn-with-icon {
-  display: flex; /* Use flexbox to align items */
-  align-items: center; /* Vertically center the icon and text */
+  display: flex; 
+  align-items: center; 
 }
 
-/* Styles for Registration and Login Components */
 .auth-container {
   max-width: 400px;
   margin: 0 auto;
@@ -235,7 +239,7 @@ body {
 .logo {
   max-width: 20%;
   height: auto;
-  margin-bottom: 20px; /* Space between image and title */
+  margin-bottom: 20px; 
 }
 .centered-form {
   display: flex;
