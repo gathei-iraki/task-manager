@@ -1,5 +1,5 @@
 # task-manager
-<b>Video Recording of app's functionality<b><br>
+<b>Video Recording of app's functionality</b><br>
 https://drive.google.com/file/d/19rmLBk8S-3SsLyPAe3VuoAnRyTSOAyO5/view?usp=sharing<br>
 <b>Getting Started</b> <br>
 Clone the repository:<br>
