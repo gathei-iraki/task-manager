@@ -70,7 +70,7 @@ class Login extends Component {
   render() {
     return (
       <div className="centered-form">
-        <h2>Login</h2>
+        <h2>LOGIN</h2>
         <form onSubmit={this.handleSubmit}>
           <div>
             <label>Username:</label>

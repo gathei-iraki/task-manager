@@ -75,7 +75,7 @@ class Register extends Component {
   render() {
     return (
       <div className="centered-form">
-        <h2>Register</h2>
+        <h2>REGISTER</h2>
         <form onSubmit={this.handleSubmit}>
           <div>
             <label>Username:</label>
