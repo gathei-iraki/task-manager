@@ -177,6 +177,12 @@ class App extends Component {
                 <div className="card p-3">
                   <div className="">
                     <button onClick={this.createItem} className="btn btn-primary"
+
+                    style={
+                      {
+                        fontWeight:"500"
+                      }
+                    }
                    
                     >
                       Add task
