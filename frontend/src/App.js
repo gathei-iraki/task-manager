@@ -179,7 +179,12 @@ class App extends Component {
                     <button onClick={this.createItem} className="btn btn-primary">
                       Add task
                     </button>
-                    <button onClick={this.handleLogout} className="btn btn-secondary ml-2">
+                    <button onClick={this.handleLogout} className="btn btn-secondary ml-2"
+                    style={{
+                      fontWeight: "500",
+                      marginLeft: "229px",
+                    }}
+                    >
                       Logout
                     </button>
                   </div>
