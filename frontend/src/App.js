@@ -43,7 +43,7 @@ class App extends Component {
   };
 
   handleRegister = () => {
-    this.setState({ view: "register" });
+    this.setState({ view: "login" });  // Switch to the login view after successful registration
   };
 
   handleLogin = (token) => {
@@ -103,8 +103,7 @@ class App extends Component {
             onClick={() => this.editItem(item)}
             className="btn btn-success"
           >
-                          <img src={require('./edit.png')} alt="" className="image-icon"></img>
-
+            <img src={require('./edit.png')} alt="" className="image-icon"></img>
             Edit
           </button>
           <button
@@ -178,21 +177,15 @@ class App extends Component {
                 <div className="card p-3">
                   <div className="">
                     <button onClick={this.createItem} className="btn btn-primary"
-
-                    style={
-                      {
-                        fontWeight:"500"
-                      }
-                    }
-                   
+                      style={{ fontWeight: "500" }}
                     >
                       Add task
                     </button>
                     <button onClick={this.handleLogout} className="btn btn-secondary ml-2"
-                    style={{
-                      fontWeight: "500",
-                      marginLeft: "229px",
-                    }}
+                      style={{
+                        fontWeight: "500",
+                        marginLeft: "229px",
+                      }}
                     >
                       Logout
                     </button>
@@ -217,22 +210,21 @@ class App extends Component {
           </div>
         );
         break;
-        default:
-          content = (
-            <div className="text-center">
-              <img src={require('./project-management.png')} alt="" className="logo" ></img>
-              <h1 className="text-black text-uppercase text-center my-4">Task Manager</h1>
-              <button onClick={() => this.setState({ view: "login" })} className="btn btn-primary mr-2"
-                >
-                Login
-              </button>
-              <button onClick={() => this.setState({ view: "register" })} className="btn btn-secondary">
-                Register
-              </button>
-            </div>
-          );
-          break;
-      }
+      default:
+        content = (
+          <div className="text-center">
+            <img src={require('./project-management.png')} alt="" className="logo" ></img>
+            <h1 className="text-black text-uppercase text-center my-4">Task Manager</h1>
+            <button onClick={() => this.setState({ view: "login" })} className="btn btn-primary mr-2">
+              Login
+            </button>
+            <button onClick={() => this.setState({ view: "register" })} className="btn btn-secondary">
+              Register
+            </button>
+          </div>
+        );
+        break;
+    }
 
     return (
       <main className="content main-content">

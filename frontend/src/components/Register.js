@@ -49,7 +49,7 @@ class Register extends Component {
             loading: false,
           });
           if (this.props.onRegister) {
-            this.props.onRegister();
+            this.props.onRegister();  // Call the onRegister prop to switch to the login view
           }
           setTimeout(() => this.setState({ message: "" }), 3000);
         } else {
