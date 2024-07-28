@@ -39,12 +39,13 @@ body {
 
 /* Style the buttons */
 .btn-primary {
-  background-color: #007bff; /* Button background color */
+  background-color: #6c757d !important; /* Button background color */
   color: #fff; /* Button text color */
+  font-weight: 500 !important;
   border: none; /* Remove button border */
   padding: 10px 20px; /* Padding inside the button */
   margin-bottom: 20px; /* Margin at the bottom */
-  width: 80px;
+  width: 200px;
 }
 
 .btn-primary:hover {
@@ -54,10 +55,10 @@ body {
 .btn-secondary {
   background-color: #6c757d; /* Button background color */
   color: #fff; /* Button text color */
-  border: none; /* Remove button border */
+  border:#6c757d ;
   padding: 10px 20px; /* Padding inside the button */
   margin-bottom: 20px; /* Margin at the bottom */
-  width: 80px
+  width: 200px
 }
 
 .btn-secondary:hover {
@@ -115,6 +116,7 @@ body {
   padding: 10px; /* Padding inside input fields */
   margin-bottom: 20px; /* Margin at the bottom of input fields */
 }
+
 
 /* Style the save button */
 .btn-success {
@@ -201,7 +203,7 @@ body {
 
 .auth-container button {
   padding: 10px;
-  background-color: #007bff;
+  background-color: black;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -227,4 +229,30 @@ body {
   max-width: 20%;
   height: auto;
   margin-bottom: 20px; /* Space between image and title */
+}
+.centered-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Full viewport height for vertical centering */
+  font-weight: 500;
+}
+
+.centered-form form {
+  width: 300px; /* Adjust as needed */
+}
+
+.centered-form form div {
+  margin-bottom: 15px; /* Spacing between form fields */
+}
+
+.btn-custom {
+  background-color: #6c757d; /* Custom button background color */
+  color: #fff; /* Button text color */
+  font-weight: 500;
+  border: none; /* Remove button border */
+  padding: 10px 20px; /* Padding inside the button */
+  margin-bottom: 20px; /* Margin at the bottom */
+  width: 100%; /* Full width button */
 }

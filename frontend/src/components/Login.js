@@ -66,8 +66,8 @@ class Login extends Component {
 
   render() {
     return (
-      <div>
-        <h2>Login</h2>
+      <div className="centered-form">
+        <h2>LOGIN</h2>
         <form onSubmit={this.handleSubmit}>
           <div>
             <label>Username:</label>
@@ -89,7 +89,7 @@ class Login extends Component {
               required
             />
           </div>
-          <button type="submit" disabled={this.state.loading}>
+          <button type="submit" className="btn-custom" disabled={this.state.loading}>
             {this.state.loading ? "Logging in..." : "Login"}
           </button>
         </form>

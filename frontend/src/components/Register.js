@@ -27,11 +27,6 @@ class Register extends Component {
       return;
     }
 
-    if (password.length < 6) {
-      this.setState({ message: "Password must be at least 6 characters long." });
-      return;
-    }
-
     this.setState({ loading: true });
 
     axios
@@ -48,10 +43,7 @@ class Register extends Component {
             password: "",
             loading: false,
           });
-          if (this.props.onRegister) {
-            this.props.onRegister();
-          }
-          setTimeout(() => this.setState({ message: "" }), 3000);
+          this.props.onRegister();
         } else {
           this.setState({
             message: response.data.error || "An unexpected error occurred.",
@@ -60,7 +52,6 @@ class Register extends Component {
         }
       })
       .catch((error) => {
-        console.error("Error during registration:", error);
         if (error.response && error.response.data.error) {
           this.setState({ message: error.response.data.error, loading: false });
         } else {
@@ -74,8 +65,8 @@ class Register extends Component {
 
   render() {
     return (
-      <div>
-        <h2>Register</h2>
+      <div className="centered-form">
+        <h2>REGISTER</h2>
         <form onSubmit={this.handleSubmit}>
           <div>
             <label>Username:</label>
@@ -97,7 +88,7 @@ class Register extends Component {
               required
             />
           </div>
-          <button type="submit" disabled={this.state.loading}>
+          <button type="submit" className="btn-custom" disabled={this.state.loading}>
             {this.state.loading ? "Registering..." : "Register"}
           </button>
         </form>
