@@ -43,7 +43,10 @@ class Login extends Component {
             password: "",
             loading: false,
           });
-          this.props.onLogin(response.data.token);  // Pass token to parent component
+          if (this.props.onLogin) {
+            this.props.onLogin(response.data.token);  // Pass token to parent component
+          }
+          setTimeout(() => this.setState({ message: "" }), 3000);
         } else {
           this.setState({
             message: response.data.error || "An unexpected error occurred.",
@@ -67,7 +70,7 @@ class Login extends Component {
   render() {
     return (
       <div className="centered-form">
-        <h2>LOGIN</h2>
+        <h2>Login</h2>
         <form onSubmit={this.handleSubmit}>
           <div>
             <label>Username:</label>

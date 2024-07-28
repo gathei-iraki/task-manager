@@ -236,7 +236,6 @@ body {
   align-items: center;
   justify-content: center;
   height: 100vh; /* Full viewport height for vertical centering */
-  font-weight: 500;
 }
 
 .centered-form form {
@@ -248,9 +247,8 @@ body {
 }
 
 .btn-custom {
-  background-color: #6c757d; /* Custom button background color */
+  background-color: #28a745; /* Custom button background color */
   color: #fff; /* Button text color */
-  font-weight: 500;
   border: none; /* Remove button border */
   padding: 10px 20px; /* Padding inside the button */
   margin-bottom: 20px; /* Margin at the bottom */
