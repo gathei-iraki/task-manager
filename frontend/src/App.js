@@ -103,14 +103,15 @@ class App extends Component {
             onClick={() => this.editItem(item)}
             className="btn btn-success"
           >
-            <img src="/edit.png" alt="" className="image-icon" />
+                          <img src={require('./edit.png')} alt="" className="image-icon"></img>
+
             Edit
           </button>
           <button
             onClick={() => this.handleDelete(item)}
             className="btn btn-danger"
           >
-            <img src="/delete.png" alt="" className="image-icon" />
+            <img src={require('./delete.png')} alt="" className="image-icon" />
             Delete
           </button>
         </span>
@@ -219,7 +220,7 @@ class App extends Component {
         default:
           content = (
             <div className="text-center">
-              <img src="/project-management.png" alt="Task Manager Logo" className="logo" />
+              <img src={require('./project-management.png')} alt="" className="logo" ></img>
               <h1 className="text-black text-uppercase text-center my-4">Task Manager</h1>
               <button onClick={() => this.setState({ view: "login" })} className="btn btn-primary mr-2"
                 >
